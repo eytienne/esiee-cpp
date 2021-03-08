@@ -1,7 +1,6 @@
 #ifndef TP2_PERSON
 #define TP2_PERSON
 
-#include <sstream>
 #include <string>
 using namespace std;
 

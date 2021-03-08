@@ -1,4 +1,5 @@
 #include "./Person.hpp"
+#include <sstream>
 
 Person::Person(string lastname, string firstname, short age) {
 	this->lastname = lastname;
