@@ -21,13 +21,7 @@ class Person {
 	void setFirstname(string firstname);
 	void setAge(short age);
 
-	string to_string() const {
-		stringstream ret;
-		ret << "Person{ firstname: " << this->firstname
-			<< ", lastname: " << this->lastname << ", age: " << this->age
-			<< " }";
-		return ret.str();
-	}
+	string to_string() const;
 
 	friend ostream &operator<<(ostream &ss, const Person &pp) {
 		return ss << pp.to_string();

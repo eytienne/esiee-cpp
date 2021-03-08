@@ -31,3 +31,10 @@ short Person::getAge() {
 void Person::setAge(short age) {
 	this->age = age;
 }
+
+string Person::to_string() const {
+	stringstream ret;
+	ret << "Person{ firstname: " << this->firstname
+		<< ", lastname: " << this->lastname << ", age: " << this->age << " }";
+	return ret.str();
+}
