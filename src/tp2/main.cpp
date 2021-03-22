@@ -3,7 +3,7 @@
 #include "./Vect.hpp"
 #include "./Util.cpp"
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 
 void exo1() {
 	Person *persons[5];

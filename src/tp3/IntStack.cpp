@@ -1,5 +1,5 @@
 #include "./IntStack.hpp"
-#include "./assert.h"
+#include "./cassert"
 
 IntStack::IntStack(int n) {
 	data = new vector<int>(n, 0);

@@ -109,7 +109,7 @@ void part3_1() {
 }
 
 #include "./mystring_t.hpp"
-#include "./assert.h"
+#include "./cassert"
 
 void part3_2() {
 	mystring_t mst;

@@ -1,11 +1,11 @@
-#include <assert.h>
+#include <cassert>
 #include <cstdio>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <new>
 #include <regex>
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
 #include <sys/resource.h>
 #include <type_traits>
