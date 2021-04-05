@@ -28,7 +28,7 @@ template <typename T> class Stack {
 		data->push_back(v);
 	}
 	T pop() {
-		if (empty()) return (T)NULL;
+		if (empty()) return (T)nullptr;
 		T ret = data->back();
 		data->pop_back();
 		return ret;

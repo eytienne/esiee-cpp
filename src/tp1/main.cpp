@@ -19,7 +19,7 @@ void affecte(float *e, int divider) {
 void exo1() {
 	float *e = new float;
 	string buffer;
-	srand(time(NULL));
+	srand(time(nullptr));
 	while (true) {
 		cout << "Continue ? (y/N) ";
 		getline(cin, buffer);
@@ -55,7 +55,7 @@ class Date {
 		return query == "year"
 				   ? &this->year
 				   : query == "month" ? &this->year
-									  : query == "day" ? &this->day : NULL;
+									  : query == "day" ? &this->day : nullptr;
 	}
 
 	string to_string() const {
@@ -145,7 +145,7 @@ template <typename T> T my_prompt() {
 	} else if (is_same<T, char>::value) {
 		cout << "Char ? ";
 	} else {
-		return NULL;
+		return nullptr;
 	}
 	cin >> data;
 	return data;
