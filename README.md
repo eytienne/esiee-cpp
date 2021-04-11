@@ -1,4 +1,4 @@
 # esiee-cpp
 
 ### Run it with:
-    g++ *.cpp -o exe && ./exe
+    g++ -I ../include/ Distributeur.run.cpp ../src/*.cpp -o exe

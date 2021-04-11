@@ -13,6 +13,7 @@ class Monnayeur {
   public:
 	bool exact() const;
 	bool assez() const;
+	float lire_prix() const;
 	void memorise_prix(float prix);
 	void recevoir(float somme);
 	float rendre_monnaie();
@@ -20,6 +21,10 @@ class Monnayeur {
 	string to_string() const;
 	friend ostream &operator<<(ostream &lhs, const Monnayeur &rhs) {
 		return lhs << rhs.to_string();
+	}
+
+	template <class Archive> void serialize(Archive &archive) {
+		archive(prix, somme_totale);
 	}
 };
 

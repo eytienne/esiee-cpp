@@ -3,11 +3,13 @@
 #include <cstring>
 
 int Stock::nb_sortes() const {
-	return index;
+	return rails.size();
 }
 
-void Stock::CHECK_VALID(int num_produit) const{
-	assert(num_produit < MAX_SORTES);
+void Stock::CHECK_VALID(int num_produit) const {
+	// assert(num_produit < nb_sortes());
+	auto ptr = &rails[num_produit];
+	if (ptr == nullptr) throw index_out_of_bounds_exception();
 }
 
 int Stock::nb_unites(int num_produit) const {
@@ -15,9 +17,9 @@ int Stock::nb_unites(int num_produit) const {
 	return quantites[num_produit];
 }
 
-Stock::elem *Stock::ieme(int num_produit) const {
+const Stock::elem *Stock::ieme(int num_produit) const {
 	CHECK_VALID(num_produit);
-	return rails[num_produit];
+	return rails[num_produit].get();
 }
 
 bool Stock::est_vide(int num_produit) const {
@@ -25,7 +27,7 @@ bool Stock::est_vide(int num_produit) const {
 }
 
 bool Stock::est_limite() const {
-	for (int i = 0; i < MAX_SORTES; i++) {
+	for (int i = 0; i < quantites.size(); i++) {
 		if (quantites[i] < SEUIL) return true;
 	}
 	return false;
@@ -34,11 +36,10 @@ bool Stock::est_limite() const {
 int Stock::stocker(elem *adr_produit, int quantite) {
 	int idx = rechercher(adr_produit);
 	if (idx == ERR_INCONNU) {
-		if (index + 1 > MAX_SORTES) return ERR_PLEIN;
-		rails[index] = adr_produit;
-		idx = index;
-		index++;
-
+		if (nb_sortes() + 1 > MAX_SORTES) return ERR_PLEIN;
+		rails.push_back(unique_ptr<elem>(adr_produit));
+		quantites.push_back(0);
+		idx = nb_sortes() - 1;
 	} else {
 		if (est_plein(idx)) return ERR_PLEIN;
 		if (quantites[idx] + quantite > MAX_QUANTITE) return ERR_DEP;
@@ -63,8 +64,8 @@ bool Stock::est_plein(int num_produit) const {
 }
 
 int Stock::rechercher(const elem *adr_produit) const {
-	for (int i = 0; i < MAX_SORTES; i++) {
-		if (rails[i] == adr_produit) return i;
+	for (int i = 0; i < rails.size(); i++) {
+		if (rails[i].get() == adr_produit) return i;
 	}
 	return ERR_INCONNU;
 }

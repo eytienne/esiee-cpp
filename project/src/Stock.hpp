@@ -2,7 +2,18 @@
 #define PROJET_STOCK
 
 #include "./Produit.hpp"
+#include <cereal/types/memory.hpp>
+#include <cereal/types/vector.hpp>
+#include <memory>
+#include <vector>
+using namespace std;
 
+class index_out_of_bounds_exception : public exception {
+  public:
+	virtual const char *what() const throw() {
+		return "Index out of bounds!";
+	}
+};
 class Stock {
   public:
 	typedef Produit elem;
@@ -17,22 +28,25 @@ class Stock {
 	static const int SEUIL = 2;
 
   private:
-	int index = 0;
-	int quantites[MAX_SORTES] = {0};
-	elem *rails[MAX_SORTES] = {nullptr};
+	vector<int> quantites{};
+	vector<unique_ptr<elem>> rails{};
 	void CHECK_VALID(int num_produit) const;
 	int traite_vide(int);
 
   public:
 	int nb_sortes() const;
 	int nb_unites(int num_produit) const;
-	elem *ieme(int num_produit) const;
+	const elem *ieme(int num_produit) const;
 	bool est_vide(int num_produit) const;
 	bool est_limite() const;
 	int stocker(elem *adr_produit, int quantite);
 	int retirer(int);
 	bool est_plein(int num_produit) const;
 	int rechercher(const elem *adr_produit) const;
+
+	template <class Archive> void serialize(Archive &archive) {
+		archive(CEREAL_NVP(quantites), CEREAL_NVP(rails));
+	}
 };
 
 #endif

@@ -16,6 +16,10 @@ void Monnayeur::log() {
 		 << ", à payer = " << fmax(0, prix - somme_totale) << endl;
 }
 
+float Monnayeur::lire_prix() const {
+	return prix;
+}
+
 void Monnayeur::memorise_prix(float prix) {
 	this->prix = prix;
 	log();

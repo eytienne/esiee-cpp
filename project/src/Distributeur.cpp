@@ -4,29 +4,36 @@
 using namespace std;
 
 #define NBMAXPROD 10
-Distributeur::Distributeur() {
+Distributeur::Distributeur(bool init) {
 	num_produit = -1;
-	Produit *produit;
-	produit = new Produit("Orange", 3.00);
-	stock_produits.stocker(produit, 5);
-	produit = new Produit("Cafe_sans", 5.00);
-	stock_produits.stocker(produit, 4);
-	produit = new Produit("Cafe_unpeu", 5.00);
-	stock_produits.stocker(produit, 3);
-	produit = new Produit("Cafe_beaucoup", 5.00);
-	stock_produits.stocker(produit, 2);
+	if (init) {
+		Produit *produit;
+		produit = new Produit("Orange", 3.00);
+		stock_produits.stocker(produit, 5);
+		produit = new Produit("Cafe_sans", 5.00);
+		stock_produits.stocker(produit, 4);
+		produit = new Produit("Cafe_unpeu", 5.00);
+		stock_produits.stocker(produit, 3);
+		produit = new Produit("Cafe_beaucoup", 6.00);
+		stock_produits.stocker(produit, 2);
+	}
 }
 
 bool Distributeur::produit_demande() const {
 	return num_produit != -1;
 }
 void Distributeur::delivre_produit() {
+	if (!monnayeur.assez()) return;
 	int res = stock_produits.retirer(num_produit);
 	if (res != Stock::OK) {
 		cout << "Erreur lors de la demande (" << res << ")" << endl;
 		return;
 	}
-	cout << "Demande effectuée avec succès" << endl;
+	float prix = monnayeur.lire_prix();
+	monnayeur.recevoir(-prix);
+	monnayeur.annulation();
+	cout << "Produit délivré: " << stock_produits.ieme(num_produit)->acces_nom()
+		 << endl;
 	if (stock_produits.est_limite()) {
 		cout << " [appelez le remplisseur !] " << endl;
 	} else {
@@ -52,13 +59,11 @@ void Distributeur::run() {
 		cout << monnayeur << endl;
 		cout << "[P]roduits, [M]onnayeur, [Q]uitter ? ";
 		cin >> rep1;
-		cerr << "DEBUG: '" << rep1 << "'" << endl;
 		switch (rep1) {
 		case 'P':
 		case 'p':
 			cout << "[Q]uitter ou nume'ro du produit ? ";
 			cin >> rep2;
-			cerr << "DEBUG P: '" << rep2 << "'" << endl;
 			switch (rep2) {
 			case 'q':
 			case 'Q':
