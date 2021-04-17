@@ -54,7 +54,7 @@ void Distributeur::run() {
 	char rep1, rep2;
 	char rep2_s[2] = {'\0'};
 	int pnum;
-	int fini = 0;
+	bool fini = false;
 	while (!fini) {
 		cout << monnayeur << endl;
 		cout << "[P]roduits, [M]onnayeur, [Q]uitter ? ";
@@ -67,7 +67,7 @@ void Distributeur::run() {
 			switch (rep2) {
 			case 'q':
 			case 'Q':
-				fini = 1;
+				fini = true;
 				break;
 			case '1':
 			case '2':
@@ -88,7 +88,7 @@ void Distributeur::run() {
 			switch (rep2) {
 			case 'q':
 			case 'Q':
-				fini = 1;
+				fini = true;
 				break;
 			case 'A':
 				monnayeur.annulation();
@@ -104,6 +104,10 @@ void Distributeur::run() {
 			case '0':
 				piece += 0.50;
 				monnayeur.recevoir(piece);
+				if (produit_demande() && monnayeur.assez()) {
+					delivre_produit();
+					fini = true;
+				}
 				break;
 			default:
 				cout << "Q ou A ou 0, 1, 2, 5, D !" << endl;
@@ -111,10 +115,11 @@ void Distributeur::run() {
 			break;
 		case 'q':
 		case 'Q':
-			fini = 1;
+			fini = true;
 			break;
 		default:
 			cout << "P ou M ou Q !" << endl;
 		}
 	}
+	annule_demande();
 }

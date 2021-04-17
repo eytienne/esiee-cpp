@@ -23,6 +23,7 @@ int main() {
 		} catch (const index_out_of_bounds_exception &e) { assert(true); }
 		biarchive(distri);
 		cout << "log: " << distri.stock_produits.ieme(0)->acces_nom() << endl;
+		cout << "-----------------------DEMARRAGE-----------------------" << endl;
 		distri.run();
 	}
 }
